@@ -1,21 +1,22 @@
+// migrations/YYYYMMDDHHMMSS-create-rol.js
 'use strict';
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('roles', {
       id_rol: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: true
       },
       nombre: {
         type: Sequelize.STRING(100),
-        allowNull: false,
-      },
+        allowNull: false
+      }
     });
   },
 
-  async down(queryInterface, Sequelize) {
+  down: async (queryInterface) => {
     await queryInterface.dropTable('roles');
-  },
+  }
 };

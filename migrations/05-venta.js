@@ -1,34 +1,35 @@
+// migrations/YYYYMMDDHHMMSS-create-venta.js
 'use strict';
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('ventas', {
       id_venta: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: true
       },
       id_usuario: {
         type: Sequelize.INTEGER,
         references: {
           model: 'usuarios',
-          key: 'id_usuario',
+          key: 'id_usuario'
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+        allowNull: false
       },
       monto_total: {
-        type: Sequelize.DOUBLE(10, 2),
-        allowNull: false,
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: false
       },
       fecha: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false,
-      },
+        defaultValue: Sequelize.NOW
+      }
     });
   },
 
-  async down(queryInterface, Sequelize) {
+  down: async (queryInterface) => {
     await queryInterface.dropTable('ventas');
-  },
+  }
 };

@@ -1,28 +1,45 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require(".");
-const Usuario = require("./Usuario");
-const Venta_detalle = require("./Venta_detalle");
+// models/venta.js
+const { Model, DataTypes } = require('sequelize');
 
+module.exports = (sequelize) => {
+  class Venta extends Model {
+    static associate(models) {
+      this.belongsTo(models.Usuario, { 
+        foreignKey: 'id_usuario', 
+        as: 'usuario' 
+      });
+      this.hasMany(models.VentaDetalle, { 
+        foreignKey: 'id_venta', 
+        as: 'detalles' 
+      });
+    }
+  }
 
-module.exports = (sequelize, DataTypes) => {
-    const Venta = sequelize.define ('Venta', {
-        id_usuario: {type: DataTypes.INTEGER, allowNull: false},
-        monto_total: {type: DataTypes.DOUBLE(10,2), allowNull: false},
-        fecha: {type: DataTypes.DATEONLY, allowNull: false, defaultValue: DataTypes.NOW},
-    }, {
-        timestamps: false,
-        modelName: 'venta'
-    });
+  Venta.init({
+    id_venta: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    id_usuario: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    monto_total: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false
+    },
+    fecha: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      defaultValue: DataTypes.NOW
+    }
+  }, {
+    sequelize,
+    modelName: 'Venta',
+    tableName: 'ventas',
+    timestamps: false
+  });
 
-    Venta.hasMany(sequelize.models.Usuario,{
-        foreignKey: 'id_usuario',
-        as: 'usuarios'
-    });
-
-    Venta.hasOne(sequelize.models.Venta_detalle, {
-        foreignKey: 'id_venta',
-        as: 'venta_detalles'
-    });
-
-    return Venta;
+  return Venta;
 };

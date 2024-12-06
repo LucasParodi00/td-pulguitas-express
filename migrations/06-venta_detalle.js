@@ -1,48 +1,46 @@
-
+// migrations/YYYYMMDDHHMMSS-create-venta-detalle.js
 'use strict';
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('venta_detalles', {
       id_venta_detalle: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: true
       },
       id_venta: {
         type: Sequelize.INTEGER,
+        primaryKey: true,
         references: {
           model: 'ventas',
-          key: 'id_venta',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+          key: 'id_venta'
+        }
       },
       id_producto: {
         type: Sequelize.INTEGER,
         references: {
           model: 'productos',
-          key: 'id_producto',
+          key: 'id_producto'
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+        allowNull: false
       },
       precio_unitario: {
-        type: Sequelize.DOUBLE(10, 2),
-        allowNull: false,
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: false
       },
       cantidad: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
       sub_total: {
-        type: Sequelize.DOUBLE(10, 2),
-        allowNull: false,
-      },
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: false
+      }
     });
   },
 
-  async down(queryInterface, Sequelize) {
+  down: async (queryInterface) => {
     await queryInterface.dropTable('venta_detalles');
-  },
+  }
 };

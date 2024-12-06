@@ -1,38 +1,38 @@
+// migrations/YYYYMMDDHHMMSS-create-producto.js
 'use strict';
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('productos', {
       id_producto: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: true
       },
       id_categoria: {
         type: Sequelize.INTEGER,
         references: {
           model: 'categorias',
-          key: 'id_categoria',
+          key: 'id_categoria'
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+        allowNull: false
       },
       nombre: {
         type: Sequelize.STRING(100),
-        allowNull: false,
+        allowNull: false
       },
       estado: {
         type: Sequelize.BOOLEAN,
-        defaultValue: true,
+        defaultValue: true
       },
       descripcion: {
         type: Sequelize.TEXT,
-        allowNull: true,
-      },
+        allowNull: true
+      }
     });
   },
 
-  async down(queryInterface, Sequelize) {
+  down: async (queryInterface) => {
     await queryInterface.dropTable('productos');
-  },
+  }
 };

@@ -1,25 +1,49 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require(".");
-const Producto = require("./Producto");
+// models/producto-presentacion.js
+const { Model, DataTypes } = require('sequelize');
 
+module.exports = (sequelize) => {
+  class ProductoPresentacion extends Model {
+    static associate(models) {
+      this.belongsTo(models.Producto, { 
+        foreignKey: 'id_producto', 
+        as: 'producto' 
+      });
+    }
+  }
 
+  ProductoPresentacion.init({
+    id_presentacion: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    id_producto: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    nombre: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    precio_compra: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false
+    },
+    porcentaje_aumento: {
+      type: DataTypes.DECIMAL(5, 2),
+      allowNull: false
+    },
+    stock: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    }
+  }, {
+    sequelize,
+    modelName: 'ProductoPresentacion',
+    tableName: 'producto_presentaciones',
+    timestamps: false
+  });
 
-module.exports = (sequelize, DataTypes) => {
-    const Producto_presentacion = sequelize.define ('Producto_presentacion', {
-        nombre: {type: DataTypes.STRING, allowNull: false},
-        precio_compra: {type: DataTypes.DOUBLE(10,2), allowNull: false},
-        porcentaje_aumento : {type: DataTypes.DOUBLE(5,2), allowNull: false, defaultValue: 0.0},
-        stock: {type: DataTypes.INTEGER, allowNull: true, defaultValue: 0},
-        id_producto: {type: DataTypes.INTEGER, allowNull: false}
-    }, {
-        timestamps: false, 
-        modelName: 'producto_presentacion'
-    });
-
-    Producto_presentacion.belongTo(sequelize.models.Producto, {
-        foreignKey: 'id_producto',
-        as: 'productos'
-    });
-
-    return Producto_presentacion;
+  return ProductoPresentacion;
 };

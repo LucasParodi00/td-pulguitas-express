@@ -1,27 +1,29 @@
-// models/categoria.js
+// models/mascota.js
 const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  class Categoria extends Model {
+  class Mascota extends Model {
     static associate(models) {
-      this.hasMany(models.Producto, { 
-        foreignKey: 'id_categoria', 
-        as: 'productos' 
+      this.belongsToMany(models.Producto, { 
+        through: 'producto_mascota',
+        foreignKey: 'id_mascota',
+        otherKey: 'id_producto',
+        as: 'productos'
       });
     }
   }
 
-  Categoria.init({
-    id_categoria: {
+  Mascota.init({
+    id_mascota: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
     nombre: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true
-    },
+    }, 
     estado: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
@@ -29,10 +31,10 @@ module.exports = (sequelize) => {
     }
   }, {
     sequelize,
-    modelName: 'Categoria',
-    tableName: 'categorias',
+    modelName: 'Mascota',
+    tableName: 'mascotas',
     timestamps: false
   });
 
-  return Categoria;
+  return Mascota;
 };

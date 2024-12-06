@@ -1,25 +1,60 @@
-const Rol = require("./Rol");
+// models/usuario.js
+const { Model, DataTypes } = require('sequelize');
 
+module.exports = (sequelize) => {
+  class Usuario extends Model {
+    static associate(models) {
+      this.belongsTo(models.Rol, { 
+        foreignKey: 'id_rol', 
+        as: 'rol' 
+      });
+      this.hasMany(models.Venta, { 
+        foreignKey: 'id_usuario', 
+        as: 'ventas' 
+      });
+    }
+  }
 
-module.exports = (sequelize, DataTypes) => {
-    const Usuario = sequelize.define('Usuario', {
-        nombre: {type: DataTypes.STRING, allowNull: false},
-        apellido: {type: DataTypes.STRING, allowNull: false},
-        correo: {type: DataTypes.STRING, allowNull: false},
-        password: {type: DataTypes.STRING, allowNull: false},
-        id_rol: {type: DataTypes.INTEGER, allowNull: false}
-    }, 
-    {
-        timestamps: false,
-        modelName: 'usuario'
-    });
+  Usuario.init({
+    id_usuario: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    nombre: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    apellido: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    correo: {
+      type: DataTypes.STRING(100),
+      unique: true,
+      allowNull: false,
+      validate: {
+        isEmail: true
+      }
+    },
+    password: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    id_rol: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1
+    },
+    estado: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    }
+  }, {
+    sequelize,
+    modelName: 'Usuario',
+    tableName: 'usuarios',
+    timestamps: false
+  });
 
-    Usuario.belongsTo(sequelize.models.Rol, {
-        foreignKey: 'id_rol',
-        as: 'rol',
-        onDelete: 'RESTRICT',
-        onUpdate: 'CASCADE'
-    });
-
-    return Usuario;
+  return Usuario;
 };
