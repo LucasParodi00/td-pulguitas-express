@@ -11,9 +11,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.1",
+    "express-validator": "^7.2.0",
     "mysql2": "^3.11.5",
+    "pnpm": "^9.15.0",
     "sequelize": "^6.37.5"
   },
   "devDependencies": {

@@ -1,43 +1,43 @@
+// migrations/YYYYMMDDHHMMSS-create-producto-presentacion.js
 'use strict';
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('producto_presentaciones', {
       id_presentacion: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: true
       },
       id_producto: {
         type: Sequelize.INTEGER,
         references: {
           model: 'productos',
-          key: 'id_producto',
+          key: 'id_producto'
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        allowNull: false
       },
       nombre: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       precio_compra: {
-        type: Sequelize.DOUBLE(10, 2),
-        allowNull: false,
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: false
       },
       porcentaje_aumento: {
-        type: Sequelize.DOUBLE(5, 2),
-        allowNull: false,
+        type: Sequelize.DECIMAL(5, 2),
+        allowNull: false
       },
       stock: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: 0,
-      },
+        defaultValue: 0
+      }
     });
   },
 
-  async down(queryInterface, Sequelize) {
+  down: async (queryInterface) => {
     await queryInterface.dropTable('producto_presentaciones');
-  },
+  }
 };

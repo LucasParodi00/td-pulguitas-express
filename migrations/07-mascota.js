@@ -1,21 +1,28 @@
+// migrations/YYYYMMDDHHMMSS-create-mascota.js
 'use strict';
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('mascotas', {
       id_mascota: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: true
       },
       nombre: {
         type: Sequelize.STRING,
         allowNull: false,
-      },
+        unique: true
+      }, 
+      estado: {
+        type: Sequelize.BOOLEAN,
+        allowNull: true, 
+        defaultValue: true
+      }
     });
   },
 
-  async down(queryInterface, Sequelize) {
+  down: async (queryInterface) => {
     await queryInterface.dropTable('mascotas');
-  },
+  }
 };
