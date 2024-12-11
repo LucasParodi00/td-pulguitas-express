@@ -14,8 +14,8 @@ const sequelize = new Sequelize (
     development.PASSWORD, 
     {
         host: development.HOST,
-        dialect: 'mysql'
-    }
+        dialect: 'mysql',
+     }
 )
 
 try {

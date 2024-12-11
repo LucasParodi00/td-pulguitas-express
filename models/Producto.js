@@ -12,6 +12,10 @@ module.exports = (sequelize) => {
         foreignKey: 'id_producto', 
         as: 'ventas_detalle' 
       });
+      this.hasMany(models.Imagen, { 
+        foreignKey: 'id_producto', 
+        as: 'imagenes' 
+      });
       this.hasMany(models.ProductoPresentacion, { 
         foreignKey: 'id_producto', 
         as: 'presentaciones' 
@@ -37,7 +41,8 @@ module.exports = (sequelize) => {
     },
     nombre: {
       type: DataTypes.STRING(100),
-      allowNull: false
+      allowNull: false,
+      
     },
     estado: {
       type: DataTypes.BOOLEAN,

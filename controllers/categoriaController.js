@@ -1,7 +1,7 @@
 
  
 const { Op } = require('sequelize');
-const { Categoria, Producto, sequelize } = require('../models');
+const { Categoria, Producto, sequelize } = require('../models'); 
 const responseHelper = require('../utils/helper/responseHelper');
 
 const setCategoria = async (req, res) => {
@@ -17,7 +17,7 @@ const setCategoria = async (req, res) => {
         await transaction.rollback();
         return responseHelper.error(res,' ', err.message);
     }
-}
+} 
 
 const getCategorias = async (req, res) => {
     const { nombre, page = 1, limit = 1000 } = req.query;

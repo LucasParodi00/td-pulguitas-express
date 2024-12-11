@@ -8,7 +8,11 @@ module.exports = (sequelize) => {
         foreignKey: 'id_producto', 
         as: 'producto' 
       });
-    }
+      this.belongsTo(models.VentaDetalle, { 
+        foreignKey: 'id_presentacion', 
+        as: 'presentaciones' 
+      });
+    } 
   }
 
   ProductoPresentacion.init({

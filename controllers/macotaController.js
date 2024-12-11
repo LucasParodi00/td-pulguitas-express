@@ -1,5 +1,5 @@
 const { Op, where } = require("sequelize");
-const { sequelize, Mascota, Producto } = require("../models");
+const { sequelize, Mascota, ProductoMascota} = require("../models");
 const responseHelper = require("../utils/helper/responseHelper");
 
 
@@ -81,10 +81,9 @@ const updateMascota = async (req, res) => {
 
 const deleteMascota = async (req, res) => {
     const { id } = req.params;
-
     const transaction = await sequelize.transaction();
     try {
-        const productoRelacionado = await Producto.count({
+        const productoRelacionado = await ProductoMascota.count({
             where: {id_mascota: id},
             transaction
         });
