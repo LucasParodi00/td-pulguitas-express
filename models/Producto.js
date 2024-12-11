@@ -7,11 +7,7 @@ module.exports = (sequelize) => {
       this.belongsTo(models.Categoria, { 
         foreignKey: 'id_categoria', 
         as: 'categoria' 
-      });
-      this.hasMany(models.VentaDetalle, { 
-        foreignKey: 'id_producto', 
-        as: 'ventas_detalle' 
-      });
+      })
       this.hasMany(models.ProductoPresentacion, { 
         foreignKey: 'id_producto', 
         as: 'presentaciones' 

@@ -8,8 +8,8 @@ module.exports = (sequelize) => {
         foreignKey: 'id_venta', 
         as: 'venta' 
       });
-      this.belongsTo(models.Producto, { 
-        foreignKey: 'id_producto', 
+      this.hasMany(models.ProductoPresentacion, { 
+        foreignKey: 'id_presentacion', 
         as: 'producto' 
       });
     }
@@ -25,7 +25,7 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true
     },
-    id_producto: {
+    id_presentacion: {
       type: DataTypes.INTEGER,
       allowNull: false
     },

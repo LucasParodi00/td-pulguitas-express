@@ -23,6 +23,9 @@ importers:
       mysql2:
         specifier: ^3.11.5
         version: 3.11.5
+      pnpm:
+        specifier: ^9.15.0
+        version: 9.15.0
       sequelize:
         specifier: ^6.37.5
         version: 6.37.5(mysql2@3.11.5)
@@ -598,6 +601,11 @@ packages:
   picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+
+  pnpm@9.15.0:
+    resolution: {integrity: sha512-duI3l2CkMo7EQVgVvNZije5yevN3mqpMkU45RBVsQpmSGon5djge4QfUHxLPpLZmgcqccY8GaPoIMe1MbYulbA==}
+    engines: {node: '>=18.12'}
+    hasBin: true
 
   proto-list@1.2.4:
     resolution: {integrity: sha512-vtK/94akxsTMhe0/cbfpR+syPuszcuwhqVjJq26CuNDgFGj682oRBXOP5MJpv2r7JtE8MsiepGIqvvOTBwn2vA==}
@@ -1441,6 +1449,8 @@ snapshots:
   pg-connection-string@2.7.0: {}
 
   picomatch@2.3.1: {}
+
+  pnpm@9.15.0: {}
 
   proto-list@1.2.4: {}
 
