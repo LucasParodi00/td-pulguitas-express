@@ -2,6 +2,7 @@
 const { where } = require('sequelize');
 const { Producto, Categoria, Usuario, Venta, ProductoPresentacion, VentaDetalle, sequelize } = require('../models/');
 
+
 const getVentasController = async (id_usuario) => {
     try {
         const ventas = await Venta.findAll({

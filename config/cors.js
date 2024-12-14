@@ -10,9 +10,9 @@ const corsOptions = {
   optionsSuccessStatus: 200 
 };
 
-const PORT = process.env.PORT || 5000;
-const URL_API = process.env.URL_API;
-const HOST = process.env.HOST;
+const PORT = process.env.APP_PORT || 3000;
+const URL_API = process.env.BASE_URL;
+const HOST = process.env.DB_HOST;
 
 
 module.exports = {

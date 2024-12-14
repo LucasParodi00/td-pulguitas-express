@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${APP_PORT}:3000" # Expone el puerto 3000 de tu aplicación
+    volumes:
+      - .:/app # Mapea tu código local a la carpeta /app dentro del contenedor
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${DB_NAME}
+    depends_on:
+      - mysql # Asegura que MySQL esté listo antes de iniciar la app
+    restart: always
+
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306" # Puerto estándar de MySQL
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASS} # Cambia por uno seguro
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+    volumes:
+      - mysql_data:/var/lib/mysql # Persistencia de datos
+
+volumes:
+  mysql_data:

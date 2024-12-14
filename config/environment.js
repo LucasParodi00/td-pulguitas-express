@@ -5,18 +5,18 @@
 
 const enviroment = {
     development: {
-        PORT: 3000,
-        DATABASE: 'talentos',
-        USERNAME: 'root',
-        PASSWORD: 'root',
-        HOST: "localhost"
+        PORT: process.env.APP_PORT,
+        DATABASE: process.env.DB_NAME,
+        USERNAME: process.env.DB_USER,
+        PASSWORD: process.env.DB_PASS,
+        HOST: process.env.HOST
     },
 
     production: {
-        PORT: process.env.PORT,
-        DATABASE: process.env.DATABASE,
-        USERNAME: process.env.USERNAME,
-        PASSWORD: process.env.PASSWORD,
+        PORT: process.env.APP_PORT,
+        DATABASE: process.env.DB_NAME,
+        USERNAME: process.env.DB_USER,
+        PASSWORD: process.env.DB_PASS,
         HOST: process.env.HOST
     }
 }

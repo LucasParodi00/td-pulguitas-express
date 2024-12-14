@@ -5,6 +5,8 @@ const { setVentaValidation, getVentasValidation } = require('../utils/validation
 
 
 const router = express.Router();
+//ADD :id
+
 
 // Obtener todas las ventas de un usuario
 router.get('/', getVentasValidation, getVentasHandler);
