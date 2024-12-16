@@ -46,41 +46,67 @@ const setProducto = async (req, res) => {
         return responseHelper.error(res, 'Error al cargar el producto. ');
     }
 }
+
 const getProductos = async (req, res) => {
-    const { nombre, page = 1, limit = 1000, categoria = '', mascota = '' } = req.query;
+    const { 
+        nombre, 
+        page = 1, 
+        limit = 1000, 
+        categoria = '', 
+        mascota = '' 
+    } = req.query;
 
     try {
-        const { count, rows: productos } = await Producto.findAndCountAll({
-            include: [
-                {
-                    model: ProductoPresentacion,
-                    as: 'presentaciones'
-                },
-                {
-                    model: Imagen,
-                    as: 'imagenes'
-                },
-                {
-                    model: Categoria,
-                    as: 'categoria'
-                },
-                {
-                    model: Mascota,
-                    as: 'mascotas',
-                    through: { model: ProductoMascota }
-                }
-            ],
-            where: {
-                ...(nombre && { nombre: { [Op.like]: `%${nombre}%` } }),
-                ...(categoria && { '$categoria.nombre$': { [Op.like]: `%${categoria}%` } }),
-                ...(mascota && { '$mascotas.nombre$': { [Op.like]: `%${mascota}%` } }),
+        // Construir condiciones de filtro
+        const whereConditions = {};
+        const includeConditions = [
+            {
+                model: ProductoPresentacion,
+                as: 'presentaciones'
             },
+            {
+                model: Imagen,
+                as: 'imagenes',
+                separate: true
+            },
+            {
+                model: Categoria,
+                as: 'categoria'
+            },
+            {
+                model: Mascota,
+                as: 'mascotas',
+                through: { model: ProductoMascota }
+            }
+        ];
+
+        // Filtro por nombre
+        if (nombre) {
+            whereConditions.nombre = { [Op.like]: `%${nombre}%` };
+        }
+
+        // Filtro por categoría
+        if (categoria) {
+            includeConditions[2].where = {
+                nombre: { [Op.like]: `%${categoria}%` }
+            };
+        }
+
+        // Filtro por mascota
+        if (mascota) {
+            includeConditions[3].where = {
+                nombre: { [Op.like]: `%${mascota}%` }
+            };
+        }
+
+        const { count, rows: productos } = await Producto.findAndCountAll({
+            include: includeConditions,
+            where: whereConditions,
             distinct: true,
             col: 'id_producto',
             limit: parseInt(limit),
             offset: (page - 1) * limit,
             order: [['id_producto', 'DESC']],
-            logging: console.log,
         });
 
         return responseHelper.success(res, 'Lista de productos.', {
@@ -92,6 +118,7 @@ const getProductos = async (req, res) => {
         return responseHelper.error(res, 'Error al listar los productos', err.message);
     }
 };
+
 
 const getProductoBase = async (id) => {
         return await Producto.findByPk(id, {
