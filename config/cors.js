@@ -1,19 +1,18 @@
 
-
-
+const {development } = require('./environment');
+const config = development;
 
 const corsOptions = {
-  origin: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: ['http://localhost:5173', 'http://149.50.145.228:80', 'http://149.50.145.228:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'], 
-  credentials: true, 
-  optionsSuccessStatus: 200 
+  credentials: false, 
+  optionsSuccessStatus: 204 
 };
 
-const PORT = process.env.PORT || 5000;
-const URL_API = process.env.URL_API;
-const HOST = process.env.HOST;
-
+const PORT = config.PORT
+const URL_API = config.URL_API;
+const HOST = config.HOST || '0.0.0.0';
 
 module.exports = {
   corsOptions,
@@ -21,3 +20,4 @@ module.exports = {
   URL_API,
   HOST
 };
+
